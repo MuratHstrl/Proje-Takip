@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "firebase": "^5.5.9",
+    "firebase": "^5.5.7",
     "react": "^16.6.3",
+    "react-accessible-accordion": "^2.4.5",
     "react-dom": "^16.6.3",
     "react-scripts": "2.1.1",
     "semantic-ui-css": "^2.4.1",

@@ -1,7 +1,7 @@
 import React from 'react';
 import firebase from 'firebase';
-import { error } from 'util';
 import Login from './Login';
+import { Button, Form } from 'semantic-ui-react';
 export class Singup extends React.Component{
     constructor(props){
         super(props);
@@ -13,7 +13,7 @@ export class Singup extends React.Component{
     }
     kaydet=()=>{
         firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then(()=>{
-            alert('Giriş Yaptınız')
+            alert('Kayıt Oluşturuldu')
             this.setState({
                 email:'',
                 password:'',
@@ -36,34 +36,20 @@ render(){
     }
     return(
         //Login Paneli
-        <div style={{margin:'auto', width:'20%' ,backgroundColor:'white', marginTop:'35%'}}>
-        <div class="ui middle aligned center aligned grid">
-        <div class="column">
-        <h2 class="ui teal image header">
-        <div class="content">
-         Register
-        </div>
-        </h2>
-    <form class="ui large form">
-        <div class="ui stacked segment">
-        <div class="field">
-        <div class="ui left icon input">
-        <i class="user icon"></i>
-        <input type="email" name="emailad" placeholder="E-mail" onChange={this.Kaydetemail}/>
-        </div>
-        </div>
-        <div class="field">
-        <div class="ui left icon input">
-        <i class="lock icon"></i>
-        <input type="password" name="password" placeholder="Password" onChange={this.KaydetPassword}/>
-        </div>
-        </div>
-        <button class="ui fluid large teal submit button" onClick={this.kaydet} >Kaydol</button>
-        </div>
-        <div class="ui error message"></div>
-    </form>      
-        </div>
-        </div>
+        <div style={{margin:'auto', width:'20%' ,backgroundColor:'white', marginTop:'35%', borderRadius:'2px'}}>
+        <p style={{textAlign:'center'}}><h3>Sing-up</h3></p>
+        <hr/>
+        <Form>
+        <Form.Field>
+          <label>E-posta</label>
+          <input type='email' placeholder='e-posta' onChange={this.Kaydetemail} />
+        </Form.Field>
+        <Form.Field>
+          <label>Şifre</label>
+          <input type='password' placeholder='şifre' onChange={this.KaydetPassword} />
+        </Form.Field>
+        <Button inverted color='green' onClick={this.kaydet} style={{marginLeft:'68%'}} >Kaydol</Button>
+      </Form> 
         </div>
         //------------------------------------------------------------
     )
