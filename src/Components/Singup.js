@@ -1,7 +1,7 @@
 import React from 'react';
 import firebase from 'firebase';
 import Login from './Login';
-import { Button, Form } from 'semantic-ui-react';
+import { Button, Form , Card} from 'semantic-ui-react';
 export class Singup extends React.Component{
     constructor(props){
         super(props);
@@ -35,22 +35,22 @@ render(){
         return(<Login></Login>)
     }
     return(
-        //Login Paneli
-        <div style={{margin:'auto', width:'20%' ,backgroundColor:'white', marginTop:'35%', borderRadius:'2px'}}>
-        <p style={{textAlign:'center'}}><h3>Sing-up</h3></p>
-        <hr/>
-        <Form>
-        <Form.Field>
-          <label>E-posta</label>
-          <input type='email' placeholder='e-posta' onChange={this.Kaydetemail} />
-        </Form.Field>
-        <Form.Field>
-          <label>Şifre</label>
-          <input type='password' placeholder='şifre' onChange={this.KaydetPassword} />
-        </Form.Field>
-        <Button inverted color='green' onClick={this.kaydet} style={{marginLeft:'68%'}} >Kaydol</Button>
-      </Form> 
-        </div>
+        <Card style={{ padding: '2%' , margin:'auto', marginTop:'20%' }}>
+                <Card.Header>Sing-up</Card.Header>
+                <hr></hr>
+                <Form>
+                    <Form.Field>
+                        <label>Eposta</label>
+                        <input type='email' placeholder='e-posta' onChange={this.Kaydetemail}/>
+                    </Form.Field>
+                    <Form.Field>
+                        <label>Şifre</label>
+                        <input type="password"  placeholder='şifre' onChange={this.KaydetPassword} />
+                    </Form.Field>
+                </Form>
+                <Card.Content extra>
+                <Button inverted color='green' onClick={this.kaydet} style={{marginLeft:'68%'}} >Kaydol</Button>                     </Card.Content>
+            </Card>   
         //------------------------------------------------------------
     )
 }

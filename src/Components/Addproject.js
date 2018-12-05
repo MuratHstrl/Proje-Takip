@@ -161,13 +161,13 @@ Gun =(id)=>{
                 <Grid columns={2}>
                     <GridColumn>
                 <div><p style={{textAlign:'center'}}><h3>YAPILMASINI BEKLIYENLER</h3></p><hr/>
-                <div style={{overflowY:'auto', height:'800px'}}>{x}</div>
+                <div style={{overflowY:'auto', height:'750px'}}>{x}</div>
                 
                 </div>
                 </GridColumn>
                 <GridColumn>
                 <div><p style={{textAlign:'center'}}><h3>Yapılanlar</h3></p><hr/>
-                <div style={{overflowY:'auto' , height:'800px'}}>{y}</div>               
+                <div style={{overflowY:'auto' , height:'750px'}}>{y}</div>               
                 </div>
                 </GridColumn>
                 </Grid>
