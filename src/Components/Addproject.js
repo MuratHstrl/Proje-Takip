@@ -1,6 +1,5 @@
 import React from 'react';
 import firebase from'firebase';
-import ReactDOM from 'react-dom';
 import {
     Accordion,
     AccordionItem,
@@ -13,7 +12,8 @@ class Addproject extends React.Component{
 constructor(){
     super();
     this.state={
-        Datass:[]
+        Datass:[],
+        Deneme:[],
     }
 }
 sil =(id) =>{
@@ -24,6 +24,12 @@ sil =(id) =>{
 alert(ee)
            })  
 }
+
+Gun =(id)=>{
+    firebase.database().ref('Data/'+this.state.s+'/'+id).update({
+            Pbmbm:1
+    })
+}
  componentWillMount(){
         const s = localStorage.getItem('uid');
         this.setState({
@@ -31,10 +37,12 @@ alert(ee)
         })
         console.log(s);
         firebase.database().ref('Data/'+s).on('value', (Snap) => {
+            const gelen = Snap.child('Pbmbm').val();
+            console.log(gelen);
             let dizi = [];
             // içini gezer verileri okuyup diziye atar
-                Snap.forEach((deger) => {
-                    const value = deger.key;
+                Snap.forEach((deger) => {                   
+                    const value = deger.key;                 
                     const {Pa,
             Pbt,
             Pgl,
@@ -44,7 +52,8 @@ alert(ee)
             Pya,
             Paa,
             kuid,
-            Pbmbm,} = deger.val();
+            Pbmbm,
+             } = deger.val();
                     dizi.push({ value, Pa,Pbt,
                         Pgl,
                         Phu,
@@ -55,14 +64,17 @@ alert(ee)
                         kuid,
                         Pbmbm,})
                 })
-                dizi.reverse();
-                this.setState({ Datass: dizi })                 
+            this.setState({ 
+                    Datass: dizi    
+                })
+
+                                        
         })
     }
     render(){
         const x = this.state.Datass.map((deger, i) => {
+            if(deger.Pbmbm == 0){
             return(
-                           
                 <Accordion>
                     <AccordionItem>
                         <AccordionItemTitle>
@@ -93,64 +105,69 @@ alert(ee)
                                 </GridColumn>
                                 </GridRow>
                                 </Grid>
-                            <Button  color="green">Tamamlandı</Button>
+                            <Button  color="green" onClick={()=>{this.Gun(deger.value)}}>Tamamlandı</Button>
                             <Button  color="Red" onClick={() => { this.sil(deger.value) }}>Sil</Button>
                     </AccordionItemBody>
                     </AccordionItem>                
                 </Accordion>
-            )
+                
+            )}
+           
         })
         //-----------------------------------------------------------------------------------------------
-        const y = this.state.Datass.map((degerr, i) => {
-            return(
-                           
-                <Accordion>
-                    <AccordionItem>
-                        <AccordionItemTitle>
-                        <Grid columns={2}>
-                                <GridRow>
-                                    <GridColumn>
-                                        <b>Proje Adı : </b> {degerr.Pa}<br></br>
-                                        <b>Proje Amacı :</b> {degerr.Pya}<br></br>                                         
-                                    </GridColumn>
-                                    <GridColumn>
-                                        <b>Proje Ekleme Tarihi :</b>  {degerr.Pbt}<br></br>
-                                    </GridColumn>
-                                </GridRow>
-                            </Grid>
-                        </AccordionItemTitle>
-                    <AccordionItemBody>
-                    <p style={{textAlign:'center'}}><b>Proje Açıklaması :</b> {degerr.Paa}</p>
-                            <hr></hr>
+        const y = this.state.Datass.map((deger, i) => {
+             if (deger.Pbmbm == 1) {                         
+                return(
+                               
+                    <Accordion>
+                        <AccordionItem>
+                            <AccordionItemTitle>
                             <Grid columns={2}>
-                            <GridRow>
-                                <GridColumn>  
-                                <b> Proje Hosting Url :</b>{degerr.Phu}<br></br>
-                                <b> Projenin apk linki :</b>{degerr.Pal}<br></br>                           
-                                </GridColumn>
-                                <GridColumn>
-                                <b>Proje Mobil git linki :</b>{degerr.Pmgl}<br></br>
-                                <b>Proje git linki : </b>{degerr.Pgl}
-                                </GridColumn>
-                                </GridRow>
+                                    <GridRow>
+                                        <GridColumn>
+                                            <b>Proje Adı : </b> {deger.Pa}<br></br>
+                                            <b>Proje Amacı :</b> {deger.Pya}<br></br>                                         
+                                        </GridColumn>
+                                        <GridColumn>
+                                            <b>Proje Ekleme Tarihi :</b>  {deger.Pbt}<br></br>
+                                        </GridColumn>
+                                    </GridRow>
                                 </Grid>
-                            <Button  color="Red" onClick={() => { this.sil(degerr.value) }}>Sil</Button>
-                    </AccordionItemBody>
-                    </AccordionItem>                
-                </Accordion>
-            )
+                            </AccordionItemTitle>
+                        <AccordionItemBody>
+                        <p style={{textAlign:'center'}}><b>Proje Açıklaması :</b> {deger.Paa}</p>
+                                <hr></hr>
+                                <Grid columns={2}>
+                                <GridRow>
+                                    <GridColumn>  
+                                    <b> Proje Hosting Url :</b>{deger.Phu}<br></br>
+                                    <b> Projenin apk linki :</b>{deger.Pal}<br></br>                           
+                                    </GridColumn>
+                                    <GridColumn>
+                                    <b>Proje Mobil git linki :</b>{deger.Pmgl}<br></br>
+                                    <b>Proje git linki : </b>{deger.Pgl}
+                                    </GridColumn>
+                                    </GridRow>
+                                    </Grid>
+                                <Button  color="Red" onClick={() => { this.sil(deger.value) }}>Sil</Button>
+                        </AccordionItemBody>
+                        </AccordionItem>                
+                    </Accordion>
+                )
+            }
         })
         return(
             <Segment>
                 <Grid columns={2}>
                     <GridColumn>
                 <div><p style={{textAlign:'center'}}><h3>YAPILMASINI BEKLIYENLER</h3></p><hr/>
-                {x}
+                <div style={{overflowY:'auto', height:'800px'}}>{x}</div>
+                
                 </div>
                 </GridColumn>
                 <GridColumn>
                 <div><p style={{textAlign:'center'}}><h3>Yapılanlar</h3></p><hr/>
-                {y}
+                <div style={{overflowY:'auto' , height:'800px'}}>{y}</div>               
                 </div>
                 </GridColumn>
                 </Grid>
